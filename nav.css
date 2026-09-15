@@ -1,0 +1,164 @@
+/* ── SHARED NAV CSS ── */
+:root{
+  --red:#A9264E;
+  --warm:#928B81;
+  --white:#ffffff;
+  --black:#1d1d1f;
+  --offwhite:#f5f5f7;
+  --midgray:#6e6e73;
+  --lightgray:#d2d2d7;
+  --ultralightgray:#e8e8ed;
+  --nav-bg:#A9264E;
+  --font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--white);color:var(--black);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:52px}
+
+#site-nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:var(--nav-bg);
+  height:52px;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  height:52px;
+  display:flex;align-items:center;
+  padding:0 24px;gap:32px;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;flex-shrink:0;
+}
+.nav-brand-text{
+  font-size:15px;font-weight:600;color:white;
+  letter-spacing:-.3px;white-space:nowrap;
+}
+.nav-links{
+  display:flex;align-items:center;gap:0;list-style:none;
+  margin-left:auto;
+}
+.nav-links > li > a,
+.nav-dropdown-btn{
+  display:flex;align-items:center;gap:5px;
+  font-size:12px;color:rgba(255,255,255,.72);
+  text-decoration:none;font-weight:400;
+  padding:6px 12px;border-radius:6px;
+  background:none;border:none;cursor:pointer;
+  transition:color .18s,background .18s;
+  white-space:nowrap;
+  font-family:var(--font);
+  letter-spacing:.01em;
+}
+.nav-links > li > a:hover,
+.nav-dropdown-btn:hover{color:white;background:rgba(255,255,255,.07)}
+.nav-links > li > a.active,
+.nav-dropdown-btn.active{color:white;font-weight:500}
+
+.nav-chevron{transition:transform .22s;flex-shrink:0;stroke:currentColor}
+.nav-dropdown-btn[aria-expanded="true"] .nav-chevron{transform:rotate(180deg)}
+
+/* Dropdown */
+.nav-has-dropdown{position:relative}
+.nav-dropdown{
+  position:absolute;top:calc(100% + 8px);left:50%;
+  transform:translateX(-50%);
+  background:white;
+  border:.5px solid var(--ultralightgray);
+  border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.08);
+  min-width:260px;
+  padding:10px;
+  display:none;
+  z-index:2000;
+}
+.nav-dropdown.open{display:block;animation:dropIn .18s ease}
+@keyframes dropIn{from{opacity:0;transform:translateX(-50%) translateY(-6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+.nav-dropdown-section{padding:4px 0}
+.nav-dropdown-section+.nav-dropdown-section{border-top:.5px solid var(--ultralightgray);margin-top:4px;padding-top:8px}
+.nav-dropdown-label{
+  font-size:10px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--lightgray);
+  padding:2px 8px 6px;
+}
+.nav-dropdown-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 8px;border-radius:10px;
+  text-decoration:none;
+  transition:background .15s;
+  color:var(--black);
+}
+.nav-dropdown-item:hover{background:var(--offwhite)}
+.nav-dropdown-item.active{background:rgba(169,38,78,.06)}
+.nav-dropdown-icon{
+  width:32px;height:32px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;overflow:hidden;
+}
+.nav-dropdown-icon--placeholder{
+  background:var(--ultralightgray);
+  font-size:10px;font-weight:700;color:var(--midgray);
+  border-radius:8px;
+}
+.nav-dropdown-item span:last-child{display:flex;flex-direction:column;gap:1px}
+.nav-dropdown-item strong{font-size:13px;font-weight:500;color:var(--black)}
+.nav-dropdown-item span span{font-size:11px;color:var(--midgray)}
+
+/* Hamburger */
+.nav-hamburger{
+  display:none;flex-direction:column;gap:4px;
+  background:none;border:none;cursor:pointer;
+  padding:6px;margin-left:auto;
+}
+.nav-hamburger span{
+  display:block;width:20px;height:1.5px;
+  background:white;border-radius:2px;
+  transition:transform .2s,opacity .2s;
+}
+.nav-hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
+
+@media(max-width:1180px){
+  .nav-links > li:not(.nav-has-dropdown):not(:nth-child(-n+3)){display:none}
+}
+@media(max-width:680px){
+  .nav-hamburger{display:flex}
+  .nav-links{
+    display:none;position:fixed;top:52px;left:0;right:0;bottom:0;
+    background:var(--nav-bg);flex-direction:column;align-items:stretch;
+    padding:16px;gap:2px;overflow-y:auto;
+  }
+  .nav-links.mobile-open{display:flex}
+  .nav-links > li > a,.nav-dropdown-btn{padding:12px 16px;border-radius:10px;font-size:14px}
+  .nav-dropdown{position:static;transform:none;box-shadow:none;border:none;background:rgba(255,255,255,.05);border-radius:10px;min-width:auto;margin-top:4px}
+  .nav-dropdown.open{display:block}
+  .nav-dropdown-item strong{color:white}
+  .nav-dropdown-item{color:white}
+  .nav-dropdown-label{color:rgba(255,255,255,.4)}
+  .nav-dropdown-item:hover{background:rgba(255,255,255,.07)}
+}
+
+/* ── PAGE SKELETON SHARED ── */
+.section{padding:80px 24px;max-width:980px;margin:0 auto}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:block}
+.section-title{font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-1.6px;line-height:1.06;color:var(--black);margin-bottom:16px}
+.section-lead{font-size:18px;color:var(--midgray);max-width:580px;line-height:1.6;font-weight:300}
+.divider{height:.5px;background:var(--ultralightgray);border:none;margin:0}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+
+/* ── SHARED FOOTER ── */
+.site-footer{
+  padding:32px 24px;border-top:.5px solid var(--ultralightgray);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  max-width:1200px;margin:0 auto;
+}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-brand span{font-size:13px;font-weight:500;color:var(--midgray)}
+.footer-copy{font-size:12px;color:var(--lightgray)}

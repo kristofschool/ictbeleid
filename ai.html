@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-beleid — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── SUBNAV ── */
+.subnav{
+  position:sticky;top:52px;z-index:900;
+  background:var(--white);
+  border-bottom:.5px solid var(--ultralightgray);
+  padding:0 24px;
+}
+.subnav-inner{
+  max-width:980px;margin:0 auto;
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.subnav-brand{
+  font-size:13px;font-weight:700;color:var(--red);
+  white-space:nowrap;padding:12px 0;margin-right:auto;
+  flex-shrink:0;
+}
+.subnav-inner::-webkit-scrollbar{display:none}
+.subnav-link{
+  display:inline-flex;align-items:center;
+  padding:12px 16px;
+  font-size:13px;font-weight:400;
+  color:var(--midgray);
+  text-decoration:none;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:color .18s,border-color .18s;
+  letter-spacing:-.1px;
+}
+.subnav-link:hover{color:var(--black)}
+.subnav-link.active{color:var(--red);font-weight:500;border-bottom-color:var(--red)}
+
+/* ── HERO ── */
+.hero{
+  min-height:72vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:80px 24px 60px;text-align:center;
+  background:var(--white);position:relative;overflow:hidden;
+}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:8px;justify-content:center}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:24px;height:1px;background:var(--red);opacity:.4}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:760px;margin-bottom:22px}
+.hero-mark{
+  background:linear-gradient(var(--red) 0 0) no-repeat left center / 0% 88%;
+  padding:0 10px 3px;
+  border-radius:980px;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  animation:marker-in .55s cubic-bezier(.4,0,.2,1) var(--md,0s) both;
+}
+@keyframes marker-in{
+  0%  {background-size:0% 88%}
+  100%{background-size:100% 88%;color:white}
+}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--midgray);max-width:560px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.btn-pill{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:white;font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:none;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .18s;letter-spacing:-.2px}
+.btn-pill:hover{opacity:.86;transform:scale(.99)}
+.btn-pill svg{width:12px;height:12px;fill:none;stroke:white;stroke-width:2.2}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--red);font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:1.5px solid var(--red);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;letter-spacing:-.2px}
+.btn-ghost:hover{background:var(--red);color:white}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── CATEGORY LIST (Wat verstaan we onder AI) ── */
+.cat-list{margin-top:52px;display:flex;flex-direction:column}
+.cat-item{display:grid;grid-template-columns:56px 1fr;padding:28px 0;border-bottom:.5px solid var(--ultralightgray);align-items:start}
+.cat-item:first-child{border-top:.5px solid var(--ultralightgray)}
+.cat-num{font-size:13px;font-weight:700;color:var(--red);padding-top:2px}
+.cat-title{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:8px}
+.cat-body{font-size:14px;color:var(--midgray);line-height:1.65;max-width:680px}
+.cat-body p{margin-bottom:10px}
+.cat-body p:last-of-type{margin-bottom:0}
+.cat-sublabel{display:block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--warm);margin:16px 0 8px}
+.cat-body ul{margin:0 0 0 18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 24px}
+@media(max-width:600px){.cat-body ul{grid-template-columns:1fr}}
+.cat-body ul.single{grid-template-columns:1fr}
+.cat-body li{margin-bottom:2px}
+.cat-example{background:var(--offwhite);border-left:3px solid var(--red);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:14px;font-size:14px;color:var(--black);font-style:italic;line-height:1.6}
+
+/* ── OP SCHOOL ── */
+.school-grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;border:.5px solid var(--ultralightgray);border-radius:20px;overflow:hidden}
+.school-item{background:var(--white);padding:30px 28px;border:.5px solid var(--ultralightgray);transition:background .18s}
+.school-item:hover{background:var(--offwhite)}
+.school-dot{width:10px;height:10px;border-radius:50%;background:var(--red);margin-bottom:16px;opacity:.7}
+.school-title{font-size:15px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:8px}
+.school-body{font-size:14px;color:var(--midgray);line-height:1.6}
+
+/* ── STOPLICHTMODEL ── */
+.stoplicht-box{margin-top:40px;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:20px;padding:40px 28px;text-align:center}
+.stoplicht-dots{display:flex;gap:12px;justify-content:center;margin-bottom:18px}
+.stoplicht-dot{width:16px;height:16px;border-radius:50%}
+.stoplicht-dot.red{background:#d64545}
+.stoplicht-dot.amber{background:#e0a83f}
+.stoplicht-dot.green{background:#3aa35a}
+.coming-badge{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:.5px solid var(--ultralightgray);border-radius:980px;padding:8px 18px;font-size:12px;font-weight:500;color:var(--midgray)}
+.coming-dot{width:7px;height:7px;border-radius:50%;background:var(--warm)}
+
+/* ── FAQ ── */
+.faq-wrap{background:var(--offwhite);padding:96px 24px}
+.faq-inner{max-width:740px;margin:0 auto}
+.faq-header{text-align:center;margin-bottom:56px}
+.accordion{display:flex;flex-direction:column}
+.acc-item{background:var(--white);border:.5px solid var(--ultralightgray);border-bottom:none}
+.acc-item:first-child{border-radius:14px 14px 0 0}
+.acc-item:last-child{border-radius:0 0 14px 14px;border-bottom:.5px solid var(--ultralightgray)}
+.acc-btn{width:100%;background:none;border:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;transition:background .15s}
+.acc-btn:hover{background:var(--offwhite)}
+.acc-q{font-size:15px;font-weight:500;color:var(--black);letter-spacing:-.2px;line-height:1.4}
+.acc-chevron{width:24px;height:24px;border-radius:50%;background:var(--offwhite);border:.5px solid var(--ultralightgray);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.acc-chevron svg{width:10px;height:10px;stroke:var(--midgray);fill:none;stroke-width:2;transition:transform .3s}
+.acc-item.open .acc-chevron{background:var(--red);border-color:var(--red)}
+.acc-item.open .acc-chevron svg{stroke:white;transform:rotate(180deg)}
+.acc-item.open .acc-q{color:var(--red)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .36s cubic-bezier(.4,0,.2,1)}
+.acc-body-inner{padding:0 22px 22px;border-top:.5px solid var(--ultralightgray);padding-top:18px;font-size:14px;color:var(--midgray);line-height:1.72}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- SUBNAV -->
+<nav class="subnav" id="subnav">
+  <div class="subnav-inner">
+    <span class="subnav-brand">AI-beleid</span>
+    <a class="subnav-link" href="#wat-is-ai">Wat is AI</a>
+    <a class="subnav-link" href="#op-school">Op school</a>
+    <a class="subnav-link" href="#stoplicht">Stoplichtmodel</a>
+    <a class="subnav-link" href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Beleid</div>
+  <h1>AI op <mark class="hero-mark" style="--md:.3s">school</mark>.</h1>
+  <p class="hero-sub">Hoe onze school omgaat met artificiële intelligentie — en welke plaats augmented en extended reality daarin krijgen.</p>
+  <div class="hero-actions">
+    <a href="#wat-is-ai" class="btn-pill">Wat is AI?<svg viewBox="0 0 12 12"><path d="M6 2l4 4-4 4M2 6h8"/></svg></a>
+    <a href="#faq" class="btn-ghost">Veelgestelde vragen</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WAT IS AI -->
+<div id="wat-is-ai"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Begrippenkader</span>
+    <h2 class="section-title">Wat verstaan we<br>onder AI?</h2>
+    <p class="section-lead">AI is geen eenduidig begrip. We onderscheiden vijf grote categorieën, van AI die overal in het systeem zit tot tools die heel gericht één taak uitvoeren.</p>
+  </div>
+  <div class="cat-list">
+
+    <div class="cat-item reveal">
+      <div class="cat-num">01</div>
+      <div>
+        <div class="cat-title">Systeembreed geïntegreerde AI</div>
+        <div class="cat-body">
+          <p>AI die ingebouwd zit in het besturingssysteem, zoals in iPadOS en macOS, en die uitgebreid wordt met bijvoorbeeld Apple Intelligence: uitgevoerd on-device en op de achtergrond aanwezig als een persoonlijke assistent die geïntegreerd is in het hele systeem.</p>
+          <ul>
+            <li>Live tekstherkenning uit foto's en video's</li>
+            <li>Tekst samenvatten</li>
+            <li>Schrijfhulp en herschrijven</li>
+            <li>Slim zoeken op het toestel</li>
+            <li>Automatisch vertalen</li>
+            <li>Slimme meldingen</li>
+            <li>Stemassistent</li>
+            <li>Afbeeldingen genereren</li>
+            <li>Acties uitvoeren tussen apps</li>
+            <li>Informatie uit scherminhoud begrijpen</li>
+            <li>Vergaderingen samenvatten</li>
+            <li>Slimme e-mailvoorstellen</li>
+            <li>Persoonlijke context gebruiken</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">02</div>
+      <div>
+        <div class="cat-title">LLM's (Large Language Models)</div>
+        <div class="cat-body">
+          <p>Dit zijn AI-chatbots en redeneermodellen.</p>
+          <span class="cat-sublabel">Voorbeelden</span>
+          <ul class="single"><li>Google Gemini</li><li>ChatGPT</li><li>Claude</li><li>…</li></ul>
+          <span class="cat-sublabel">Wat doen ze?</span>
+          <ul>
+            <li>Vragen beantwoorden</li>
+            <li>Programmeren</li>
+            <li>Teksten schrijven</li>
+            <li>Redeneren</li>
+            <li>Samenvatten</li>
+            <li>Vertalen</li>
+            <li>Data analyseren</li>
+            <li>Documenten verwerken</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">03</div>
+      <div>
+        <div class="cat-title">Narrow AI en AI ingebouwd in apps</div>
+        <div class="cat-body">
+          <p>Hier zit AI als onderdeel van een specifieke toepassing.</p>
+          <span class="cat-sublabel">Productiviteit</span>
+          <ul class="single">
+            <li>Goodnotes (uitgeschakeld op school)</li>
+            <li>Canva</li>
+            <li>Rekenmachines</li>
+            <li>Google Suite</li>
+            <li>…</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">04</div>
+      <div>
+        <div class="cat-title">Gespecialiseerde AI-tools</div>
+        <div class="cat-body">
+          <p>AI die één specifieke taak uitzonderlijk goed uitvoert.</p>
+          <span class="cat-sublabel">Voorbeelden</span>
+          <ul class="single">
+            <li>Midjourney</li>
+            <li>DALL·E</li>
+            <li>Perplexity</li>
+            <li>Adaptieve leerplatformen</li>
+            <li>AI-tutors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">05</div>
+      <div>
+        <div class="cat-title">Agentic AI</div>
+        <div class="cat-body">
+          <p>Dit gaat een stap verder dan een chatbot: een agent voert zelf een reeks taken na elkaar uit, zonder dat je elke stap apart moet aansturen.</p>
+          <div class="cat-example">"Maak een verslag van deze vergadering, stuur het naar alle deelnemers en plan een opvolgvergadering."</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- OP SCHOOL -->
+<div id="op-school"><div class="section">
+  <div class="reveal">
+    <span class="section-label">In gebruik</span>
+    <h2 class="section-title">Wat gebruiken we<br>op school?</h2>
+    <p class="section-lead">Twee vormen van AI zijn momenteel voorzien voor leraren en leerlingen. Meer informatie volgt.</p>
+  </div>
+  <div class="school-grid reveal reveal-delay-1">
+    <div class="school-item"><div class="school-dot"></div><div class="school-title">Google Gemini</div><div class="school-body">LLM-chatbot, beschikbaar op school.</div></div>
+    <div class="school-item"><div class="school-dot"></div><div class="school-title">On-device AI met Apple Intelligence</div><div class="school-body">Systeembreed geïntegreerd in iPadOS en macOS, verwerkt lokaal op het toestel.</div></div>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- STOPLICHTMODEL -->
+<div id="stoplicht"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Kader</span>
+    <h2 class="section-title">Stoplichtmodel</h2>
+    <p class="section-lead">Een overzicht van wat wel, met aandacht, en niet mag bij het gebruik van AI op school.</p>
+  </div>
+  <div class="stoplicht-box reveal reveal-delay-1">
+    <div class="stoplicht-dots">
+      <div class="stoplicht-dot red"></div>
+      <div class="stoplicht-dot amber"></div>
+      <div class="stoplicht-dot green"></div>
+    </div>
+    <div class="coming-badge"><div class="coming-dot"></div>Wordt aangevuld</div>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- FAQ -->
+<div id="faq" class="faq-wrap"><div class="faq-inner">
+  <div class="faq-header reveal">
+    <span class="section-label">Hulp &amp; ondersteuning</span>
+    <h2 class="section-title" style="text-align:center;letter-spacing:-1.4px">Veelgestelde vragen</h2>
+  </div>
+  <div class="accordion reveal">
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        <span class="acc-q">Welke AI kunnen we op school gebruiken?</span>
+        <div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Antwoord volgt.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        <span class="acc-q">Hoe zit het met mijn privacy?</span>
+        <div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Antwoord volgt.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        <span class="acc-q">Mag AI gebruikt worden?</span>
+        <div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Antwoord volgt.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        <span class="acc-q">Is AI een bron?</span>
+        <div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Antwoord volgt.</p></div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+/* ── ACCORDION ── */
+document.querySelectorAll('.acc-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.acc-item'),body=item.querySelector('.acc-body'),open=item.classList.contains('open');
+    document.querySelectorAll('.acc-item.open').forEach(el=>{el.classList.remove('open');el.querySelector('.acc-body').style.maxHeight='0';el.querySelector('.acc-btn').setAttribute('aria-expanded','false')});
+    if(!open){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';btn.setAttribute('aria-expanded','true')}
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── SUBNAV SMOOTH SCROLL + SCROLL-SPY ── */
+(function(){
+  const OFFSET = 52 + 45; // main nav + subnav height
+  document.querySelectorAll('.subnav-link').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.querySelector(link.getAttribute('href'));
+      if(!target) return;
+      const top=target.getBoundingClientRect().top+window.scrollY-OFFSET;
+      window.scrollTo({top,behavior:'smooth'});
+    });
+  });
+
+  const sections=['wat-is-ai','op-school','stoplicht','faq']
+    .map(id=>document.getElementById(id)).filter(Boolean);
+  const links=document.querySelectorAll('.subnav-link');
+
+  function setActive(){
+    let current=null;
+    sections.forEach(sec=>{
+      if(sec.getBoundingClientRect().top<=OFFSET+40) current=sec.id;
+    });
+    links.forEach(l=>{
+      l.classList.toggle('active', l.getAttribute('href')==='#'+current);
+    });
+  }
+  window.addEventListener('scroll',setActive,{passive:true});
+  setActive();
+})();
+</script>
+</body>
+</html>

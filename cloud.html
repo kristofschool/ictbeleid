@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud en leeromgevingen — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── SUBNAV ── */
+.subnav{position:sticky;top:52px;z-index:900;background:var(--white);border-bottom:.5px solid var(--ultralightgray);padding:0 24px}
+.subnav-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+.subnav-inner::-webkit-scrollbar{display:none}
+.subnav-brand{font-size:13px;font-weight:700;color:var(--red);white-space:nowrap;padding:12px 0;margin-right:auto;flex-shrink:0}
+.subnav-link{display:inline-flex;align-items:center;padding:12px 16px;font-size:13px;font-weight:400;color:var(--midgray);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .18s,border-color .18s;letter-spacing:-.1px}
+.subnav-link:hover{color:var(--black)}
+.subnav-link.active{color:var(--red);font-weight:500;border-bottom-color:var(--red)}
+
+/* ── HERO ── */
+.hero{min-height:62vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;background:var(--white);position:relative;overflow:hidden}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:8px;justify-content:center}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:24px;height:1px;background:var(--red);opacity:.4}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:760px;margin-bottom:22px}
+.hero-mark{background:linear-gradient(var(--red) 0 0) no-repeat left center / 0% 88%;padding:0 10px 3px;border-radius:980px;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:marker-in .55s cubic-bezier(.4,0,.2,1) var(--md,0s) both}
+@keyframes marker-in{0%{background-size:0% 88%}100%{background-size:100% 88%;color:white}}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--midgray);max-width:560px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.btn-pill{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:white;font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:none;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .18s;letter-spacing:-.2px}
+.btn-pill:hover{opacity:.86;transform:scale(.99)}
+.btn-pill svg{width:12px;height:12px;fill:none;stroke:white;stroke-width:2.2}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--red);font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:1.5px solid var(--red);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;letter-spacing:-.2px}
+.btn-ghost:hover{background:var(--red);color:white}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── CATEGORY LIST ── */
+.cat-list{margin-top:52px;display:flex;flex-direction:column}
+.cat-item{display:grid;grid-template-columns:56px 1fr;padding:28px 0;border-bottom:.5px solid var(--ultralightgray);align-items:start}
+.cat-item:first-child{border-top:.5px solid var(--ultralightgray)}
+.cat-item:last-child{border-bottom:none}
+.cat-num{font-size:13px;font-weight:700;color:var(--red);padding-top:2px}
+.cat-title{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:8px}
+.cat-body{font-size:14px;color:var(--midgray);line-height:1.65;max-width:680px}
+.cat-body p{margin-bottom:10px}
+.cat-body p:last-of-type{margin-bottom:0}
+.cat-sublabel{display:block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--warm);margin:16px 0 8px}
+.cat-body ul{margin:0 0 0 18px}
+.cat-body li{margin-bottom:4px}
+.cat-login{display:inline-flex;align-items:center;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:8px;padding:4px 10px;font-size:13px;color:var(--black);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.cat-note{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:#3aa35a;font-weight:500}
+.cat-note::before{content:'✓';width:16px;height:16px;border-radius:50%;background:rgba(58,163,90,.13);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- SUBNAV -->
+<nav class="subnav" id="subnav">
+  <div class="subnav-inner">
+    <span class="subnav-brand">Cloud en leeromgevingen</span>
+    <a class="subnav-link" href="#google-drive">Google Drive</a>
+    <a class="subnav-link" href="#icloud">iCloud-opslag</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Basisapps — Cloud en leeromgevingen</div>
+  <h1>Werken in de <mark class="hero-mark" style="--md:.3s">cloud</mark>.</h1>
+  <p class="hero-sub">Twee cloudomgevingen staan ter beschikking van het personeel: Google Workspace en iCloud via je beheerde Apple Account.</p>
+  <div class="hero-actions">
+    <a href="#google-drive" class="btn-pill">Google Drive<svg viewBox="0 0 12 12"><path d="M6 2l4 4-4 4M2 6h8"/></svg></a>
+    <a href="#icloud" class="btn-ghost">iCloud-opslag</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<div id="google-drive"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Cloudomgevingen</span>
+    <h2 class="section-title">Waar bewaar je<br>je bestanden?</h2>
+    <p class="section-lead">Een overzicht van de twee cloudomgevingen die de school voorziet voor het personeel.</p>
+  </div>
+  <div class="cat-list">
+
+    <div class="cat-item reveal">
+      <div class="cat-num">01</div>
+      <div>
+        <div class="cat-title">Gebruik je Google Drive-omgeving</div>
+        <div class="cat-body">
+          <p>De school beschikt over een betalende versie van Google Workspace for Education, waar je als personeelslid toegang tot hebt.</p>
+          <span class="cat-sublabel">Inloggen</span>
+          <p><span class="cat-login">voornaam.familienaam@sjsp.be</span></p>
+          <div class="cat-note">Privacy en data zijn veilig</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal" id="icloud">
+      <div class="cat-num">02</div>
+      <div>
+        <div class="cat-title">200 GB iCloud-opslag via jouw beheerde Apple Account</div>
+        <div class="cat-body">
+          <p>We verwachten dat je op het toestel van de school ingelogd bent met jouw beheerde Apple Account. Het is handig om daar de specifieke bestanden verbonden met de Apple-apps te bewaren.</p>
+          <ul>
+            <li>Je hebt 200 GB opslag</li>
+            <li>Je kan Apple-tools handig gebruiken</li>
+            <li>Inloggen met Goodnotes Education</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+(function(){
+  const OFFSET = 52 + 45;
+  document.querySelectorAll('.subnav-link').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.querySelector(link.getAttribute('href'));
+      if(!target) return;
+      const top=target.getBoundingClientRect().top+window.scrollY-OFFSET;
+      window.scrollTo({top,behavior:'smooth'});
+    });
+  });
+
+  const sections=['google-drive','icloud'].map(id=>document.getElementById(id)).filter(Boolean);
+  const links=document.querySelectorAll('.subnav-link');
+
+  function setActive(){
+    let current=null;
+    sections.forEach(sec=>{
+      if(sec.getBoundingClientRect().top<=OFFSET+40) current=sec.id;
+    });
+    links.forEach(l=>{
+      l.classList.toggle('active', l.getAttribute('href')==='#'+current);
+    });
+  }
+  window.addEventListener('scroll',setActive,{passive:true});
+  setActive();
+})();
+</script>
+</body>
+</html>

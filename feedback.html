@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── SUBNAV ── */
+.subnav{position:sticky;top:52px;z-index:900;background:var(--white);border-bottom:.5px solid var(--ultralightgray);padding:0 24px}
+.subnav-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+.subnav-inner::-webkit-scrollbar{display:none}
+.subnav-brand{font-size:13px;font-weight:700;color:var(--red);white-space:nowrap;padding:12px 0;margin-right:auto;flex-shrink:0}
+.subnav-link{display:inline-flex;align-items:center;padding:12px 16px;font-size:13px;font-weight:400;color:var(--midgray);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .18s,border-color .18s;letter-spacing:-.1px}
+.subnav-link:hover{color:var(--black)}
+.subnav-link.active{color:var(--red);font-weight:500;border-bottom-color:var(--red)}
+
+/* ── HERO ── */
+.hero{min-height:64vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;background:var(--white);position:relative;overflow:hidden}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:8px;justify-content:center}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:24px;height:1px;background:var(--red);opacity:.4}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:760px;margin-bottom:22px}
+.hero-mark{background:linear-gradient(var(--red) 0 0) no-repeat left center / 0% 88%;padding:0 10px 3px;border-radius:980px;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:marker-in .55s cubic-bezier(.4,0,.2,1) var(--md,0s) both}
+@keyframes marker-in{0%{background-size:0% 88%}100%{background-size:100% 88%;color:white}}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--midgray);max-width:580px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.btn-pill{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:white;font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:none;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .18s;letter-spacing:-.2px}
+.btn-pill:hover{opacity:.86;transform:scale(.99)}
+.btn-pill svg{width:12px;height:12px;fill:none;stroke:white;stroke-width:2.2}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--red);font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:1.5px solid var(--red);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;letter-spacing:-.2px}
+.btn-ghost:hover{background:var(--red);color:white}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── DOWNLOAD LIST (Sjablonen / Good practices) ── */
+.dl-list{margin-top:44px;display:flex;flex-direction:column;border:.5px solid var(--ultralightgray);border-radius:16px;overflow:hidden}
+.dl-item{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:.5px solid var(--ultralightgray);background:var(--white);transition:background .15s}
+.dl-item:last-child{border-bottom:none}
+.dl-item:hover{background:var(--offwhite)}
+.dl-left{display:flex;align-items:center;gap:14px}
+.dl-icon{width:34px;height:34px;border-radius:9px;background:var(--offwhite);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dl-icon svg{width:15px;height:15px;stroke:var(--red);fill:none;stroke-width:2}
+.dl-title{font-size:14px;font-weight:600;color:var(--black);letter-spacing:-.2px}
+
+/* ── FEEDBACKCYCLUS ── */
+.cycle-grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;border:.5px solid var(--ultralightgray);border-radius:20px;overflow:hidden}
+.cycle-card{background:var(--white);padding:30px 26px;border:.5px solid var(--ultralightgray);display:flex;flex-direction:column}
+.cycle-step{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.cycle-q{font-size:16px;font-weight:600;color:var(--black);letter-spacing:-.3px;line-height:1.4;margin-bottom:18px}
+
+/* ── BADGE ── */
+.coming-badge{display:inline-flex;align-items:center;gap:7px;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:980px;padding:6px 14px;font-size:11.5px;font-weight:500;color:var(--midgray);flex-shrink:0;white-space:nowrap}
+.coming-dot{width:6px;height:6px;border-radius:50%;background:var(--warm)}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- SUBNAV -->
+<nav class="subnav" id="subnav">
+  <div class="subnav-inner">
+    <span class="subnav-brand">Feedback</span>
+    <a class="subnav-link" href="#sjablonen">Sjablonen</a>
+    <a class="subnav-link" href="#cyclus">Feedbackcyclus</a>
+    <a class="subnav-link" href="#good-practices">Good practices</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Evaluatie — Feedback</div>
+  <h1>Inzetten op de <mark class="hero-mark" style="--md:.3s">feedbackcyclus</mark>.</h1>
+  <p class="hero-sub">Actiepunt: sjablonen, een kader en praktijkvoorbeelden om feedback een structurele plaats te geven.</p>
+  <div class="hero-actions">
+    <a href="#sjablonen" class="btn-pill">Sjablonen<svg viewBox="0 0 12 12"><path d="M6 2l4 4-4 4M2 6h8"/></svg></a>
+    <a href="#cyclus" class="btn-ghost">Feedbackcyclus</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SJABLONEN -->
+<div id="sjablonen"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Actiepunt</span>
+    <h2 class="section-title">Sjablonen</h2>
+    <p class="section-lead">Sjablonen om feedback eenvormig en overzichtelijk te geven.</p>
+  </div>
+  <div class="dl-list reveal reveal-delay-1">
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></div>
+        <div class="dl-title">Feedbacksjabloon</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Volgt</div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></div>
+        <div class="dl-title">Sjabloon voor toetsen en taken</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Volgt</div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></div>
+        <div class="dl-title">Sjabloon voor examens</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Volgt</div>
+    </div>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- FEEDBACKCYCLUS -->
+<div id="cyclus"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Kader</span>
+    <h2 class="section-title">De feedbackcyclus</h2>
+    <p class="section-lead">Drie vragen die samen de feedbackcyclus vormen.</p>
+  </div>
+  <div class="cycle-grid reveal reveal-delay-1">
+    <div class="cycle-card">
+      <div class="cycle-step">Feed up</div>
+      <div class="cycle-q">Waar sta je al?</div>
+      <div class="coming-badge"><div class="coming-dot"></div>Uitleg volgt</div>
+    </div>
+    <div class="cycle-card">
+      <div class="cycle-step">Feedback</div>
+      <div class="cycle-q">Wat liep er nog fout en kan nog beter?</div>
+      <div class="coming-badge"><div class="coming-dot"></div>Uitleg volgt</div>
+    </div>
+    <div class="cycle-card">
+      <div class="cycle-step">Feed forward</div>
+      <div class="cycle-q">Welke tips kun je opvolgen en welke actie kan je ondernemen?</div>
+      <div class="coming-badge"><div class="coming-dot"></div>Uitleg volgt</div>
+    </div>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- GOOD PRACTICES -->
+<div id="good-practices"><div class="section">
+  <div class="reveal">
+    <span class="section-label">In de praktijk</span>
+    <h2 class="section-title">Good practices</h2>
+    <p class="section-lead">Voorbeelden van hoe collega's feedback inzetten.</p>
+  </div>
+  <div class="dl-list reveal reveal-delay-1">
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 012-2h8l6 6v9a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div>
+        <div class="dl-title">Feedback via Goodnotes</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Wordt aangevuld</div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 012-2h8l6 6v9a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg></div>
+        <div class="dl-title">Feedback via Bookwidgets</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Wordt aangevuld</div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-left">
+        <div class="dl-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 19v4"/></svg></div>
+        <div class="dl-title">Audiofeedback</div>
+      </div>
+      <div class="coming-badge"><div class="coming-dot"></div>Wordt aangevuld</div>
+    </div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+(function(){
+  const OFFSET = 52 + 45;
+  document.querySelectorAll('.subnav-link').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.querySelector(link.getAttribute('href'));
+      if(!target) return;
+      const top=target.getBoundingClientRect().top+window.scrollY-OFFSET;
+      window.scrollTo({top,behavior:'smooth'});
+    });
+  });
+
+  const sections=['sjablonen','cyclus','good-practices'].map(id=>document.getElementById(id)).filter(Boolean);
+  const links=document.querySelectorAll('.subnav-link');
+
+  function setActive(){
+    let current=null;
+    sections.forEach(sec=>{
+      if(sec.getBoundingClientRect().top<=OFFSET+40) current=sec.id;
+    });
+    links.forEach(l=>{
+      l.classList.toggle('active', l.getAttribute('href')==='#'+current);
+    });
+  }
+  window.addEventListener('scroll',setActive,{passive:true});
+  setActive();
+})();
+</script>
+</body>
+</html>

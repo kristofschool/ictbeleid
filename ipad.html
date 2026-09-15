@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werken met iPad — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── HERO ── */
+.page-hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;background:var(--white)}
+.page-hero-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px;justify-content:center}
+.page-hero-label::before,.page-hero-label::after{content:'';display:block;width:20px;height:1px;background:var(--red);opacity:.4}
+.page-hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:700px;margin-bottom:18px}
+.page-hero p{font-size:18px;color:var(--midgray);max-width:480px;line-height:1.6;font-weight:300}
+
+/* ── ITEM LIJSTEN ── */
+.item-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:40px}
+@media(max-width:640px){.item-grid{grid-template-columns:1fr}}
+.item-row{display:grid;grid-template-columns:32px 1fr;align-items:center;padding:13px 0;border-bottom:.5px solid var(--ultralightgray);gap:0}
+.item-row:nth-child(1),.item-row:nth-child(2){border-top:.5px solid var(--ultralightgray)}
+@media(max-width:640px){.item-row:nth-child(2){border-top:none}}
+.item-num{font-size:12px;font-weight:700;color:var(--red);opacity:.8;letter-spacing:.02em}
+.item-label{font-size:14px;color:var(--black);line-height:1.45}
+.section-subtitle{font-size:13px;font-weight:400;color:var(--midgray);margin-top:4px;letter-spacing:0}
+
+/* ── VIDEO STRIP ── */
+.video-strip-wrap{background:#928B81;padding:60px 0 72px}
+.video-strip-inner{max-width:1100px;margin:0 auto;padding:0 32px}
+.video-strip-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;gap:16px}
+.video-strip-title{font-size:clamp(20px,3vw,28px);font-weight:700;color:white;letter-spacing:-.6px;line-height:1.15}
+.video-strip-arrows{display:flex;gap:8px;flex-shrink:0}
+.vs-arrow{width:36px;height:36px;border-radius:50%;border:.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s,border-color .18s;color:white}
+.vs-arrow:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4)}
+.vs-arrow svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.vs-arrow[data-disabled]{opacity:.3;cursor:default;pointer-events:none}
+.video-track-outer{overflow:hidden;position:relative}
+.video-track{display:flex;gap:16px;transition:transform .38s cubic-bezier(.4,0,.2,1);will-change:transform}
+.video-card{flex-shrink:0;width:320px;cursor:pointer}
+@media(max-width:600px){.video-card{width:260px}}
+.video-thumb{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#2c2c2e;margin-bottom:12px}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .28s}
+.video-card:hover .video-thumb img{transform:scale(1.03)}
+.video-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.thumb-loading{width:32px;height:32px;border:2px solid rgba(255,255,255,.2);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.32);opacity:0;transition:opacity .2s}
+.video-card:hover .play-overlay{opacity:1}
+.play-icon{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
+.play-icon svg{width:18px;height:18px;fill:var(--black);margin-left:4px}
+.video-duration{position:absolute;bottom:8px;left:10px;background:rgba(0,0,0,.72);color:white;font-size:11px;font-weight:500;border-radius:4px;padding:2px 6px;letter-spacing:.02em}
+.video-meta-title{font-size:14px;font-weight:600;color:white;line-height:1.35;letter-spacing:-.2px;margin-bottom:4px}
+.video-meta-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.4}
+
+/* Vimeo modal */
+.vimeo-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
+.vimeo-modal.open{display:flex}
+.vimeo-modal-inner{position:relative;width:min(880px,94vw);aspect-ratio:16/9;border-radius:14px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.6)}
+.vimeo-modal-inner iframe{width:100%;height:100%;display:block;border:none}
+.vimeo-close{position:absolute;top:-44px;right:0;background:rgba(255,255,255,.15);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:white}
+.vimeo-close svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:2.2;stroke-linecap:round}
+
+/* ── FEATURE CAROUSEL ── */
+.fc-wrap{padding:8px 0 12px}
+.fc-inner{max-width:1100px;margin:0 auto;padding:0 32px}
+.fc-title{font-size:clamp(22px,3.4vw,30px);font-weight:700;color:var(--black);letter-spacing:-.7px;line-height:1.18;max-width:480px;margin-bottom:36px}
+.fc-track-outer{overflow:hidden}
+.fc-track{display:flex;gap:16px;transition:transform .42s cubic-bezier(.4,0,.2,1);will-change:transform}
+.fc-card{flex-shrink:0;width:340px;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;min-height:280px}
+@media(max-width:600px){.fc-card{width:268px}}
+.fc-icon{width:46px;height:46px;border-radius:14px;background:rgba(169,38,78,.08);display:flex;align-items:center;justify-content:center;margin-bottom:24px;flex-shrink:0}
+.fc-icon svg{width:22px;height:22px;stroke:var(--red);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.fc-card-title{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:10px;line-height:1.3}
+.fc-card-body{font-size:14px;color:var(--midgray);line-height:1.65;margin-top:auto}
+.fc-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px}
+.fc-dot{width:7px;height:7px;border-radius:50%;background:var(--lightgray);border:none;padding:0;cursor:pointer;transition:background .2s,transform .2s}
+.fc-dot.active{background:var(--red);transform:scale(1.25)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-label">Handleidingen</div>
+  <h1>Werken met iPad</h1>
+  <p>Alles wat je nodig hebt om optimaal te werken met de iPad op school.</p>
+</section>
+
+
+
+<hr class="divider">
+
+<!-- FEATURE CAROUSEL -->
+<div class="fc-wrap">
+  <div class="fc-inner">
+    <div class="fc-title reveal">Functies die je meteen onder de knie hebt.</div>
+    <div class="fc-track-outer">
+      <div class="fc-track" id="fc-track">
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg></div>
+          <div class="fc-card-title">Een beheerde Apple Account</div>
+          <div class="fc-card-body">Aanmelden, instellingen beheren en veilig werken binnen de schoolomgeving — de basis voor elke leraar en leerling.</div>
+        </div>
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M9 5v14"/></svg></div>
+          <div class="fc-card-title">Multitasken en gebaren</div>
+          <div class="fc-card-body">Werk met meerdere apps tegelijk via Slide Over en Split View, en navigeer vlot met de juiste gebaren op het scherm.</div>
+        </div>
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <div class="fc-card-title">Ingebouwde apps</div>
+          <div class="fc-card-body">Van Notities en Bestanden tot Voorvertoning en Dictafoon: ontdek wat de standaard-apps van de iPad voor jouw lessen kunnen betekenen.</div>
+        </div>
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg></div>
+          <div class="fc-card-title">Productief met Pages, Numbers en Keynote</div>
+          <div class="fc-card-body">Maak documenten, rekenbladen en presentaties, en deel ze moeiteloos met collega's en leerlingen via iCloud.</div>
+        </div>
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.9-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.9z"/></svg></div>
+          <div class="fc-card-title">Creatief in al zijn vormen</div>
+          <div class="fc-card-body">Teken, monteer video, maak muziek of bouw een digitaal portfolio — de iPad zet de deur open voor creatieve lesopdrachten.</div>
+        </div>
+        <div class="fc-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+          <div class="fc-card-title">Verleg grenzen met code, AR, Apple Intelligence, ...</div>
+          <div class="fc-card-body">Laat leerlingen kennismaken met programmeren in Swift Playgrounds, augmented reality en de mogelijkheden van Apple Intelligence.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-dots" id="fc-dots"></div>
+  </div>
+</div>
+
+<!-- VIDEO STRIP -->
+<div id="videos" class="video-strip-wrap">
+  <div class="video-strip-inner">
+    <div class="video-strip-header">
+      <div>
+        <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);display:block;margin-bottom:6px">Tutorials iPad</span>
+        <div class="video-strip-title">Verder kijken</div>
+      </div>
+      <div class="video-strip-arrows">
+        <button class="vs-arrow" id="vs-prev" aria-label="Vorige" data-disabled>
+          <svg viewBox="0 0 14 14"><path d="M9 2L4 7l5 5"/></svg>
+        </button>
+        <button class="vs-arrow" id="vs-next" aria-label="Volgende">
+          <svg viewBox="0 0 14 14"><path d="M5 2l5 5-5 5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="video-track-outer">
+      <div class="video-track" id="video-track">
+
+        <div class="video-card"
+             data-vimeo-id="1151391291"
+             data-vimeo-hash="3afeddd3d6"
+             data-title="Sessie 1: Basiskennis iPad"
+             data-subtitle="Beheerde account, instellingen, gebaren &amp; meer">
+        </div>
+
+        <div class="video-card"
+             data-vimeo-id="1151392408"
+             data-vimeo-hash="ac382d4c93"
+             data-title="Sessie 2: Productiviteit op iPad"
+             data-subtitle="E-mail, Smartschool, scannen, vertalen &amp; meer">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Vimeo Modal -->
+<div class="vimeo-modal" id="vimeo-modal" role="dialog" aria-modal="true" aria-label="Video afspelen">
+  <div class="vimeo-modal-inner">
+    <button class="vimeo-close" id="vimeo-close" aria-label="Sluiten">
+      <svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg>
+    </button>
+    <iframe id="vimeo-iframe" src="" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- VERWACHTINGEN -->
+<div id="verwachtingen"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Sessie 1 · Basiskennis iPad</span>
+    <h2 class="section-title">Basiskennis voor elke leraar.</h2>
+    <p class="section-lead">Als leraar heb je zelf de basiskennis van hoe je met een iPad werkt onder de knie. Hieronder vind je een overzicht van de 10 basishandelingen die we van elke leraar verwachten.</p>
+    <p class="section-subtitle" style="margin-top:8px;font-size:13px;color:var(--midgray)">Update iPadOS 26</p>
+  </div>
+  <div class="item-grid reveal reveal-delay-1">
+    <div class="item-row"><span class="item-num">01</span><span class="item-label">Beheerde Apple Account</span></div>
+    <div class="item-row"><span class="item-num">06</span><span class="item-label">Multitasking en gebaren</span></div>
+    <div class="item-row"><span class="item-num">02</span><span class="item-label">Basisinstellingen</span></div>
+    <div class="item-row"><span class="item-num">07</span><span class="item-label">Bedieningspaneel</span></div>
+    <div class="item-row"><span class="item-num">03</span><span class="item-label">Look and feel</span></div>
+    <div class="item-row"><span class="item-num">08</span><span class="item-label">Toegankelijkheid</span></div>
+    <div class="item-row"><span class="item-num">04</span><span class="item-label">Organiseren</span></div>
+    <div class="item-row"><span class="item-num">09</span><span class="item-label">Digitaal burgerschap</span></div>
+    <div class="item-row"><span class="item-num">05</span><span class="item-label">Schermafbeeldingen</span></div>
+    <div class="item-row"><span class="item-num">10</span><span class="item-label">Privacy</span></div>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- OVERZICHT -->
+<div id="overzicht"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Sessie 2 · Productiviteit</span>
+    <h2 class="section-title">Hoe gebruik je ingebouwde functies van iPadOS voor het lesgeven?</h2>
+    <p class="section-lead">Daarnaast vind je ook 10 elementen die je kunnen helpen bij het lesgeven of het voorbereiden van jouw lessen.</p>
+  </div>
+  <div class="item-grid reveal reveal-delay-1">
+    <div class="item-row"><span class="item-num">01</span><span class="item-label">E-mail instellen</span></div>
+    <div class="item-row"><span class="item-num">06</span><span class="item-label">De app Voorvertoning</span></div>
+    <div class="item-row"><span class="item-num">02</span><span class="item-label">Abonneren op Smartschool</span></div>
+    <div class="item-row"><span class="item-num">07</span><span class="item-label">Documenten scannen</span></div>
+    <div class="item-row"><span class="item-num">03</span><span class="item-label">Notities maken</span></div>
+    <div class="item-row"><span class="item-num">08</span><span class="item-label">Vertaalfuncties</span></div>
+    <div class="item-row"><span class="item-num">04</span><span class="item-label">De app Rekenmachine</span></div>
+    <div class="item-row"><span class="item-num">09</span><span class="item-label">De app Dictafoon</span></div>
+    <div class="item-row"><span class="item-num">05</span><span class="item-label">De app Bestanden</span></div>
+    <div class="item-row"><span class="item-num">10</span><span class="item-label">De app Opdrachten</span></div>
+  </div>
+</div></div>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── VIDEO STRIP ── */
+(function(){
+  const CARD_W = 320 + 16;
+  const track  = document.getElementById('video-track');
+  const btnPrev= document.getElementById('vs-prev');
+  const btnNext= document.getElementById('vs-next');
+  let offset = 0;
+
+  document.querySelectorAll('.video-card').forEach(card=>{
+    const id       = card.dataset.vimeoId;
+    const hash     = card.dataset.vimeoHash || '';
+    const title    = card.dataset.title    || '';
+    const subtitle = card.dataset.subtitle || '';
+    const duration = card.dataset.duration || '';
+
+    card.innerHTML = `
+      <div class="video-thumb">
+        <div class="video-thumb-placeholder"><div class="thumb-loading"></div></div>
+        ${duration ? `<div class="video-duration">${duration}</div>` : ''}
+        <div class="play-overlay"><div class="play-icon"><svg viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg></div></div>
+      </div>
+      <div class="video-meta-title">${title}</div>
+      <div class="video-meta-sub">${subtitle}</div>
+    `;
+
+    // Thumbnail via Vimeo oEmbed (hash nodig voor unlisted)
+    if(id){
+      const ph = card.querySelector('.video-thumb-placeholder');
+      const oembedUrl = hash
+        ? `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}/${hash}`
+        : `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}`;
+
+      function showFallback(){
+        ph.innerHTML = `
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#2c2c2e,#3a3a3c)">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/><polygon points="13,10 24,16 13,22" fill="rgba(255,255,255,.7)"/></svg>
+            <span style="font-size:11px;color:rgba(255,255,255,.5);text-align:center;padding:0 14px;line-height:1.4">${title}</span>
+          </div>`;
+      }
+
+      fetch(oembedUrl)
+        .then(r=>{ if(!r.ok) throw new Error(); return r.json(); })
+        .then(data=>{
+          if(!data.thumbnail_url){ showFallback(); return; }
+          const img = document.createElement('img');
+          img.alt = title;
+          img.onload = ()=>{ ph.replaceWith(img); };
+          img.onerror = showFallback;
+          img.src = data.thumbnail_url;
+        })
+        .catch(showFallback);
+
+      setTimeout(()=>{ if(ph.isConnected && ph.querySelector('.thumb-loading')) showFallback(); }, 4000);
+    }
+
+    // Modal openen — hash meesturen voor unlisted video's
+    card.addEventListener('click',()=>{
+      if(!id) return;
+      const src = hash
+        ? `https://player.vimeo.com/video/${id}?h=${hash}&autoplay=1&title=0&byline=0&portrait=0`
+        : `https://player.vimeo.com/video/${id}?autoplay=1`;
+      document.getElementById('vimeo-iframe').src = src;
+      document.getElementById('vimeo-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function updateArrows(){
+    const outerW = track.parentElement.offsetWidth;
+    const maxOffset = Math.max(0, track.querySelectorAll('.video-card').length * CARD_W - outerW);
+    btnPrev.toggleAttribute('data-disabled', offset <= 0);
+    btnNext.toggleAttribute('data-disabled', offset >= maxOffset);
+  }
+
+  btnPrev.addEventListener('click',()=>{
+    offset = Math.max(0, offset - CARD_W * 2);
+    track.style.transform = `translateX(-${offset}px)`;
+    updateArrows();
+  });
+  btnNext.addEventListener('click',()=>{
+    const outerW = track.parentElement.offsetWidth;
+    const max = Math.max(0, track.querySelectorAll('.video-card').length * CARD_W - outerW);
+    offset = Math.min(max, offset + CARD_W * 2);
+    track.style.transform = `translateX(-${offset}px)`;
+    updateArrows();
+  });
+
+  updateArrows();
+  window.addEventListener('resize', updateArrows);
+
+  // Feature carousel
+  const fcTrack = document.getElementById('fc-track');
+  const fcDots = document.getElementById('fc-dots');
+  if(fcTrack && fcDots){
+    const fcCards = Array.from(fcTrack.children);
+    fcCards.forEach((_, i)=>{
+      const dot = document.createElement('button');
+      dot.className = 'fc-dot' + (i===0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Ga naar functie ' + (i+1));
+      dot.addEventListener('click', ()=> goToFc(i));
+      fcDots.appendChild(dot);
+    });
+    const fcDotEls = Array.from(fcDots.children);
+    let fcIndex = 0;
+    function fcGap(){ return parseFloat(getComputedStyle(fcTrack).gap) || 16; }
+    function goToFc(i){
+      fcIndex = Math.max(0, Math.min(fcCards.length - 1, i));
+      const cardW = fcCards[0].getBoundingClientRect().width;
+      fcTrack.style.transform = `translateX(-${fcIndex * (cardW + fcGap())}px)`;
+      fcDotEls.forEach((d, j)=> d.classList.toggle('active', j === fcIndex));
+    }
+    window.addEventListener('resize', ()=> goToFc(fcIndex));
+  }
+
+  const modal = document.getElementById('vimeo-modal');
+  document.getElementById('vimeo-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+  function closeModal(){
+    modal.classList.remove('open');
+    document.getElementById('vimeo-iframe').src='';
+    document.body.style.overflow='';
+  }
+})();
+</script>
+</body>
+</html>

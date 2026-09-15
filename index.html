@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT-beleid — Digitaal leren op school</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+.home-hero{
+  min-height:88vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:80px 24px 60px;
+  background:var(--white);position:relative;overflow:hidden;
+}
+.home-hero::before{content:'';position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(ellipse,rgba(169,38,78,.05) 0%,transparent 70%);pointer-events:none}
+.home-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:8px;justify-content:center}
+.home-label::before,.home-label::after{content:'';display:block;width:20px;height:1px;background:var(--red);opacity:.4}
+.home-hero h1{font-size:clamp(44px,8vw,84px);font-weight:700;letter-spacing:-3px;line-height:1.0;color:var(--black);max-width:860px;margin-bottom:22px}
+.home-hero h1 em{font-style:normal;color:var(--red)}
+.home-hero p{font-size:clamp(17px,2vw,21px);color:var(--midgray);max-width:520px;line-height:1.6;font-weight:300;margin-bottom:44px}
+.btn-pill{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:white;font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:none;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .18s}
+.btn-pill:hover{opacity:.86;transform:scale(.99)}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--red);font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:1.5px solid var(--red);text-decoration:none;cursor:pointer;transition:background .2s,color .2s}
+.btn-ghost:hover{background:var(--red);color:white}
+.home-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.cards-section{padding:80px 24px;max-width:980px;margin:0 auto}
+.cards-grid{margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.home-card{background:var(--offwhite);border-radius:18px;padding:28px 24px;border:.5px solid var(--ultralightgray);text-decoration:none;display:block;transition:transform .22s,box-shadow .22s}
+.home-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.08)}
+.home-card-tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--red);margin-bottom:12px}
+.home-card-title{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:8px}
+.home-card-body{font-size:13px;color:var(--midgray);line-height:1.6}
+.home-card-arrow{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--red);font-weight:500;margin-top:16px}
+.home-card-arrow svg{width:12px;height:12px;stroke:var(--red);fill:none;stroke-width:2}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<section class="home-hero">
+  <div class="home-label">ICT-beleid</div>
+  <h1>Digitaal leren.<br><em>Doordacht beleid.</em></h1>
+  <p>Alles over apps, tools, privacy en digitale werkvormen voor leraren en leerlingen op onze school.</p>
+  <div class="home-actions">
+    <a href="nieuws.html" class="btn-pill">Bekijk het nieuws</a>
+    <a href="visie.html" class="btn-ghost">Onze visie</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="cards-section">
+  <span class="section-label">Snel navigeren</span>
+  <h2 class="section-title">Waar wil je naartoe?</h2>
+  <div class="cards-grid">
+    <a class="home-card reveal" href="nieuws.html">
+      <div class="home-card-tag">Nieuws</div>
+      <div class="home-card-title">Laatste updates</div>
+      <div class="home-card-body">Nieuwe apps, tools en richtlijnen voor het schooljaar.</div>
+      <div class="home-card-arrow">Lees meer <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+    <a class="home-card reveal reveal-delay-1" href="visie.html">
+      <div class="home-card-tag">Visie</div>
+      <div class="home-card-title">Onze visie op digitaal leren</div>
+      <div class="home-card-body">Hoe kijken we naar technologie, privacy en pedagogie?</div>
+      <div class="home-card-arrow">Lees meer <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+    <a class="home-card reveal reveal-delay-2" href="goodnotes.html">
+      <div class="home-card-tag">Basisapps — Leren &amp; organiseren</div>
+      <div class="home-card-title">Goodnotes Education</div>
+      <div class="home-card-body">Slim annoteren, notities nemen en feedback geven op de iPad.</div>
+      <div class="home-card-arrow">Ontdek de app <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+    <a class="home-card reveal" href="ipad.html">
+      <div class="home-card-tag">Handleidingen</div>
+      <div class="home-card-title">Werken met iPad</div>
+      <div class="home-card-body">Instellingen, tips en workflows voor de iPad op school.</div>
+      <div class="home-card-arrow">Bekijk <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+    <a class="home-card reveal reveal-delay-1" href="toetsen.html">
+      <div class="home-card-tag">Evaluatie</div>
+      <div class="home-card-title">Toetsen</div>
+      <div class="home-card-body">Digitaal toetsen, veilige omgevingen en Toetsen met IT.</div>
+      <div class="home-card-arrow">Bekijk <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+    <a class="home-card reveal reveal-delay-2" href="contact.html">
+      <div class="home-card-tag">Contact</div>
+      <div class="home-card-title">Vragen of feedback?</div>
+      <div class="home-card-body">Neem contact op met het ICT-team van de school.</div>
+      <div class="home-card-arrow">Contacteer ons <svg viewBox="0 0 12 12"><path d="M5 2l4 4-4 4M1 6h8"/></svg></div>
+    </a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+<script>const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));</script>
+</body>
+</html>

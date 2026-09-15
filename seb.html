@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEB — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── SUBNAV ── */
+.subnav{position:sticky;top:52px;z-index:900;background:var(--white);border-bottom:.5px solid var(--ultralightgray);padding:0 24px}
+.subnav-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+.subnav-inner::-webkit-scrollbar{display:none}
+.subnav-brand{font-size:13px;font-weight:700;color:var(--red);white-space:nowrap;padding:12px 0;margin-right:auto;flex-shrink:0}
+.subnav-link{display:inline-flex;align-items:center;padding:12px 16px;font-size:13px;font-weight:400;color:var(--midgray);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .18s,border-color .18s;letter-spacing:-.1px}
+.subnav-link:hover{color:var(--black)}
+.subnav-link.active{color:var(--red);font-weight:500;border-bottom-color:var(--red)}
+
+/* ── HERO ── */
+.hero{min-height:68vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;background:var(--white);position:relative;overflow:hidden}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);margin-bottom:20px;display:flex;align-items:center;gap:8px;justify-content:center}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';display:block;width:24px;height:1px;background:var(--red);opacity:.4}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:760px;margin-bottom:22px}
+.hero-mark{background:linear-gradient(var(--red) 0 0) no-repeat left center / 0% 88%;padding:0 10px 3px;border-radius:980px;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:marker-in .55s cubic-bezier(.4,0,.2,1) var(--md,0s) both}
+@keyframes marker-in{0%{background-size:0% 88%}100%{background-size:100% 88%;color:white}}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--midgray);max-width:580px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.btn-pill{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:white;font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:none;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .18s;letter-spacing:-.2px}
+.btn-pill:hover{opacity:.86;transform:scale(.99)}
+.btn-pill svg{width:12px;height:12px;fill:none;stroke:white;stroke-width:2.2}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--red);font-size:14px;font-weight:500;padding:13px 26px;border-radius:980px;border:1.5px solid var(--red);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;letter-spacing:-.2px}
+.btn-ghost:hover{background:var(--red);color:white}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── PROSE ── */
+.section-text{font-size:15px;color:var(--midgray);line-height:1.75;max-width:680px;margin-top:18px}
+.section-text+.section-text{margin-top:12px}
+
+/* ── STEP LIST (Stappenplan) ── */
+.cat-list{margin-top:52px;display:flex;flex-direction:column}
+.cat-item{display:grid;grid-template-columns:56px 1fr;padding:28px 0;border-bottom:.5px solid var(--ultralightgray);align-items:start}
+.cat-item:first-child{border-top:.5px solid var(--ultralightgray)}
+.cat-num{font-size:13px;font-weight:700;color:var(--red);padding-top:2px}
+.cat-title{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-.3px;margin-bottom:8px}
+.cat-body{font-size:14px;color:var(--midgray);line-height:1.65;max-width:680px}
+.cat-body p{margin-bottom:10px}
+.cat-body p:last-of-type{margin-bottom:0}
+.cat-sublabel{display:block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--warm);margin:16px 0 8px}
+.cat-body ol{margin:10px 0 0 18px;display:flex;flex-direction:column;gap:9px}
+.cat-body ol li::marker{color:var(--red);font-weight:600}
+.cat-body ul{margin:0 0 0 18px}
+.cat-body li{margin-bottom:2px}
+.cat-example{background:var(--offwhite);border-left:3px solid var(--red);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:14px;font-size:14px;color:var(--black);line-height:1.6}
+
+/* ── BEVEILIGINGSNIVEAUS ── */
+.level-grid{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;border:.5px solid var(--ultralightgray);border-radius:20px;overflow:hidden}
+.level-card{background:var(--white);padding:26px 22px;border:.5px solid var(--ultralightgray)}
+.level-title{font-size:14px;font-weight:600;color:var(--black);letter-spacing:-.2px;margin-bottom:14px;min-height:34px}
+.level-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.level-list li{font-size:13px;color:var(--midgray);display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+.level-list li::before{flex-shrink:0;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:1px}
+.level-list li.yes::before{content:'✓';background:rgba(58,163,90,.13);color:#3aa35a}
+.level-list li.no::before{content:'✕';background:rgba(214,69,69,.1);color:#d64545}
+.level-card.soon{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.callout{background:var(--offwhite);border-left:3px solid var(--red);border-radius:0 14px 14px 0;padding:18px 22px;margin-top:24px;font-size:14px;color:var(--black);line-height:1.65;max-width:680px}
+.coming-badge{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:.5px solid var(--ultralightgray);border-radius:980px;padding:8px 18px;font-size:12px;font-weight:500;color:var(--midgray)}
+.coming-dot{width:7px;height:7px;border-radius:50%;background:var(--warm)}
+
+/* ── FAQ ── */
+.faq-wrap{background:var(--offwhite);padding:96px 24px}
+.faq-inner{max-width:740px;margin:0 auto}
+.faq-header{text-align:center;margin-bottom:56px}
+.accordion{display:flex;flex-direction:column}
+.acc-item{background:var(--white);border:.5px solid var(--ultralightgray);border-bottom:none}
+.acc-item:first-child{border-radius:14px 14px 0 0}
+.acc-item:last-child{border-radius:0 0 14px 14px;border-bottom:.5px solid var(--ultralightgray)}
+.acc-btn{width:100%;background:none;border:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;transition:background .15s}
+.acc-btn:hover{background:var(--offwhite)}
+.acc-q{font-size:15px;font-weight:500;color:var(--black);letter-spacing:-.2px;line-height:1.4}
+.acc-chevron{width:24px;height:24px;border-radius:50%;background:var(--offwhite);border:.5px solid var(--ultralightgray);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.acc-chevron svg{width:10px;height:10px;stroke:var(--midgray);fill:none;stroke-width:2;transition:transform .3s}
+.acc-item.open .acc-chevron{background:var(--red);border-color:var(--red)}
+.acc-item.open .acc-chevron svg{stroke:white;transform:rotate(180deg)}
+.acc-item.open .acc-q{color:var(--red)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .36s cubic-bezier(.4,0,.2,1)}
+.acc-body-inner{padding:0 22px 22px;border-top:.5px solid var(--ultralightgray);padding-top:18px;font-size:14px;color:var(--midgray);line-height:1.72}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- SUBNAV -->
+<nav class="subnav" id="subnav">
+  <div class="subnav-inner">
+    <span class="subnav-brand">SEB</span>
+    <a class="subnav-link" href="#wat-is-seb">Wat is SEB</a>
+    <a class="subnav-link" href="#stappenplan">Stappenplan</a>
+    <a class="subnav-link" href="#niveaus">Beveiligingsniveaus</a>
+    <a class="subnav-link" href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Evaluatie — Safe Exam Browser</div>
+  <h1>Veilig toetsen met <mark class="hero-mark" style="--md:.3s">SEB</mark>.</h1>
+  <p class="hero-sub">Hoe we Bookwidgets-examens beveiligen met Safe Exam Browser, en welke alternatieven er zijn voor leerlingen met een ondersteuningsnood.</p>
+  <div class="hero-actions">
+    <a href="#stappenplan" class="btn-pill">Stappenplan<svg viewBox="0 0 12 12"><path d="M6 2l4 4-4 4M2 6h8"/></svg></a>
+    <a href="#faq" class="btn-ghost">Veelgestelde vragen</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WAT IS SEB -->
+<div id="wat-is-seb"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Achtergrond</span>
+    <h2 class="section-title">Wat is Safe<br>Exam Browser?</h2>
+    <p class="section-lead">Een gratis browseromgeving om digitale evaluaties veilig af te nemen op Windows, Mac en iPad.</p>
+    <p class="section-text">Wanneer een leerkracht SEB inschakelt voor een Bookwidget, kan die widget alleen nog geopend worden binnen Safe Exam Browser. Leerlingen geven een configuratiewachtwoord in om te starten, en kunnen de omgeving pas verlaten nadat ze hun antwoorden hebben ingediend — of met een apart wachtwoord om af te sluiten of te ontgrendelen, voor wie technische ondersteuning nodig heeft.</p>
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- STAPPENPLAN -->
+<div id="stappenplan"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Voor leerkrachten</span>
+    <h2 class="section-title">Stappenplan instellingen<br>Bookwidgets</h2>
+    <p class="section-lead">Drie stappen om een Bookwidget examenklaar te maken met SEB.</p>
+  </div>
+  <div class="cat-list">
+
+    <div class="cat-item reveal">
+      <div class="cat-num">01</div>
+      <div>
+        <div class="cat-title">Bookwidget maken</div>
+        <div class="cat-body">
+          <p>Maak een nieuwe Bookwidget (quiz of werkblad) of open een bestaande widget die je wil gebruiken voor je examen. Geef ze een duidelijke naam en vul al je vragen in of pas ze aan waar nodig.</p>
+          <div class="cat-example">Je kan vertrekken van een bestaande widget, of vragen uit verschillende widgets importeren om zo een nieuw examen samen te stellen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">02</div>
+      <div>
+        <div class="cat-title">Instellingen in orde brengen</div>
+        <div class="cat-body">
+          <p>Hier staan enkel de instellingen die noodzakelijk zijn voor SEB.</p>
+          <ol>
+            <li><strong>Rapportering &gt; Indieningsformulier</strong> — zet "Leerlingen kan antwoorden indienen" aan, laat "mag maar één keer indienen" uit, en laat naam leerling, e-mail leerling, klas-ID en ID leerkracht aangevinkt staan. Vul je klas(sen) en de e-mailadressen van de betrokken vakleerkrachten in, telkens gescheiden door een komma zonder spaties.</li>
+            <li><strong>Score- en correctie-opties</strong> — voer een wachtwoord in voor het bekijken van antwoorden. Kies een wachtwoord zonder accenten.</li>
+            <li><strong>Algemeen &gt; Safe Exam Browser</strong> — vink "In Safe Exam Browser openen" aan. De widget opent dan automatisch in SEB zodra een leerling erop klikt in Smartschool.</li>
+            <li><strong>Configuratiewachtwoord</strong> — kies een wachtwoord zonder accenten, telkens anders dan de vorige keer, en noteer het op het examendocument voor de leerlingen. Vul geen opstartwachtwoord in.</li>
+            <li><strong>Wachtwoord om af te sluiten / te ontgrendelen</strong> — een apart wachtwoord, nooit gedeeld met leerlingen. Het is nodig om leerlingen uit SEB te halen bij technische problemen.</li>
+            <li><strong>Klok zichtbaar maken (optioneel)</strong> — via een SEB-bestand sjabloon blijven het batterijpercentage, de datum en de klok zichtbaar voor leerlingen. Dit is niet de afteltimer van de examenmodus.</li>
+            <li><strong>Link naar Google blokkeren in YouTube-filmpjes (optioneel)</strong> — via een ander sjabloon-bestand. Let op: je kan maar één van beide sjabloon-bestanden per widget gebruiken.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-item reveal">
+      <div class="cat-num">03</div>
+      <div>
+        <div class="cat-title">Widget delen in Smartschool</div>
+        <div class="cat-body">
+          <p>Zet je widget klaar voor je leerlingen in je vak in Smartschool.</p>
+          <ol>
+            <li>Geef je met meerdere collega's hetzelfde examen, dan deelt elke vakcollega de widget in het eigen vak voor de eigen leerlingen. We werken waar mogelijk met één vak — dat maakt ingrijpen bij problemen eenvoudiger voor alle klassen samen.</li>
+            <li>Stel een begin- en einduur in voor de zichtbaarheid van de widget. Een einduur beveiligt de widget extra tegen leerlingen die zouden proberen SEB te omzeilen.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+<hr class="divider">
+
+<!-- BEVEILIGINGSNIVEAUS -->
+<div id="niveaus"><div class="section">
+  <div class="reveal">
+    <span class="section-label">Overzicht</span>
+    <h2 class="section-title">Welk niveau van<br>beveiliging?</h2>
+    <p class="section-lead">Niet elke leerling heeft dezelfde ondersteuning nodig. Een overzicht van de mogelijke opties, en wat daarbij wel en niet werkt op de iPad.</p>
+  </div>
+
+  <div class="level-grid reveal reveal-delay-1">
+    <div class="level-card">
+      <div class="level-title">BW via Smartschool<br>in SEB</div>
+      <ul class="level-list">
+        <li class="no">Voorspellende tekst</li>
+        <li class="no">Spellingscontrole</li>
+        <li class="no">Voorleesfunctie</li>
+        <li class="no">Naar andere apps of sites</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <div class="level-title">BW in Smartschool<br>zonder beveiliging</div>
+      <ul class="level-list">
+        <li class="yes">Voorspellende tekst</li>
+        <li class="yes">Spellingscontrole</li>
+        <li class="yes">Voorleesfunctie</li>
+        <li class="yes">Naar andere apps of sites</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <div class="level-title">BW via de app<br>Begeleide toegang</div>
+      <ul class="level-list">
+        <li class="yes">Voorspellende tekst</li>
+        <li class="yes">Spellingscontrole</li>
+        <li class="yes">Voorleesfunctie</li>
+        <li class="no">Naar andere apps of sites</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <div class="level-title">BW via de app<br>Applock</div>
+      <ul class="level-list">
+        <li class="no">Voorspellende tekst</li>
+        <li class="no">Spellingscontrole</li>
+        <li class="yes">Voorleesfunctie</li>
+        <li class="no">Naar andere apps of sites</li>
+      </ul>
+    </div>
+    <div class="level-card soon">
+      <div class="level-title">BW met<br>examenlink</div>
+      <div class="coming-badge"><div class="coming-dot"></div>Nog te onderzoeken</div>
+    </div>
+  </div>
+
+  <div class="callout reveal reveal-delay-2">Begeleide toegang is de aangeraden optie voor leerlingen die voorspellende tekst, spellingscontrole én voorleesfunctie nodig hebben — op voorwaarde dat de voorspellende tekst wordt uitgezet en de juiste taal is ingesteld bij Toegankelijkheid. Voor deze leerlingen wordt een hulpkaart voorzien.</div>
+</div></div>
+
+<hr class="divider">
+
+<!-- FAQ -->
+<div id="faq" class="faq-wrap"><div class="faq-inner">
+  <div class="faq-header reveal">
+    <span class="section-label">Hulp &amp; ondersteuning</span>
+    <h2 class="section-title" style="text-align:center;letter-spacing:-1.4px">Veelgestelde vragen</h2>
+  </div>
+  <div class="accordion reveal">
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Is er een voorbeeldwidget met alle instellingen?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Ja. Je kan een voorbeeldwidget dupliceren en gebruiken als basis voor nieuwe Bookwidgets. Vraag de link op bij het ICT-team.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Kunnen leerlingen verbinding maken met draadloze oortjes?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Ja, maar ze moeten verbinding maken vóór ze de widget in Safe Exam Browser openen. Eenmaal de widget gestart is, kunnen ze niet meer naar de instellingen.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Een leerling krijgt de foutmelding "Kiosk modus niet beschikbaar". Wat nu?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Laat de leerling zijn iPad herstarten (harde reset). Daarna is het probleem meestal verholpen.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Een leerling krijgt de melding "Safari kan de pagina niet openen omdat het adres ongeldig is".</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Aangezien leerlingen de app SEB niet zelf kunnen verwijderen, zou deze melding zich niet meer mogen voordoen.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Kan een leerling na het indienen weer alles doen met zijn toestel?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Ja. Na het versturen van de widget wordt de iPad terug vrijgegeven. Houd hier rekening mee bij examens die ook een papieren onderdeel hebben.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Kan een widget met SEB ook gedeeld worden via een korte code?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Nee. Met SEB ingeschakeld moet een widget gedeeld worden via Smartschool. Wil je toch met een korte code werken, dan moet SEB eerst weer uitgeschakeld worden.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Een leerling klikte op een YouTube-filmpje in de widget en raakt er niet meer uit.</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Geen paniek: klik linksonder op het SEB-logo. Er verschijnt een menu met daarin, helemaal bovenaan, een link terug naar de widget.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Kan een widget voorgelezen worden voor leerlingen die dat nodig hebben?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Dat is voorlopig nog niet mogelijk binnen SEB. Leerlingen voor wie de voorleesfunctie noodzakelijk is, werken met een duplicaat van de widget in Applock, zonder SEB.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Werkt spellingscontrole in SEB of Applock?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Spellingscontrole is in geen van beide mogelijk. Woordvoorspelling kan wel onder Applock.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Kunnen leerlingen na het indienen hun verbetering inkijken?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Geef hen het wachtwoord dat je instelde bij de score- en correctie-opties; daarmee kunnen ze opnieuw in de widget.</p></div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false"><span class="acc-q">Hoe stuur ik de gecorrigeerde widget terug naar leerlingen?</span><div class="acc-chevron"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3"/></svg></div></button>
+      <div class="acc-body"><div class="acc-body-inner"><p>Vink alle namen aan in de inzendingenlijst en kies via het tandwieltje voor "Stuur resultaten terug". Leerlingen krijgen de widget dan in een Smartschoolbericht.</p></div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+/* ── ACCORDION ── */
+document.querySelectorAll('.acc-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.acc-item'),body=item.querySelector('.acc-body'),open=item.classList.contains('open');
+    document.querySelectorAll('.acc-item.open').forEach(el=>{el.classList.remove('open');el.querySelector('.acc-body').style.maxHeight='0';el.querySelector('.acc-btn').setAttribute('aria-expanded','false')});
+    if(!open){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';btn.setAttribute('aria-expanded','true')}
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── SUBNAV SMOOTH SCROLL + SCROLL-SPY ── */
+(function(){
+  const OFFSET = 52 + 45;
+  document.querySelectorAll('.subnav-link').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.querySelector(link.getAttribute('href'));
+      if(!target) return;
+      const top=target.getBoundingClientRect().top+window.scrollY-OFFSET;
+      window.scrollTo({top,behavior:'smooth'});
+    });
+  });
+
+  const sections=['wat-is-seb','stappenplan','niveaus','faq']
+    .map(id=>document.getElementById(id)).filter(Boolean);
+  const links=document.querySelectorAll('.subnav-link');
+
+  function setActive(){
+    let current=null;
+    sections.forEach(sec=>{
+      if(sec.getBoundingClientRect().top<=OFFSET+40) current=sec.id;
+    });
+    links.forEach(l=>{
+      l.classList.toggle('active', l.getAttribute('href')==='#'+current);
+    });
+  }
+  window.addEventListener('scroll',setActive,{passive:true});
+  setActive();
+})();
+</script>
+</body>
+</html>

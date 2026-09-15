@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nieuws — ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+.page-hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;background:var(--white)}
+.page-hero-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px;justify-content:center}
+.page-hero-label::before,.page-hero-label::after{content:'';display:block;width:20px;height:1px;background:var(--red);opacity:.4}
+.page-hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:700px;margin-bottom:18px}
+.page-hero p{font-size:18px;color:var(--midgray);max-width:480px;line-height:1.6;font-weight:300}
+.coming-badge{display:inline-flex;align-items:center;gap:8px;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:980px;padding:8px 18px;font-size:12px;font-weight:500;color:var(--midgray);margin-top:32px}
+.coming-dot{width:7px;height:7px;border-radius:50%;background:var(--warm)}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<section class="page-hero">
+  <div class="page-hero-label">Laatste updates</div>
+  <h1>Nieuws</h1>
+  <p>Blijf op de hoogte van nieuwe apps, tools en richtlijnen.</p>
+  <div class="coming-badge"><div class="coming-dot"></div>Pagina wordt aangevuld</div>
+</section>
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+<script>const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));</script>
+</body>
+</html>

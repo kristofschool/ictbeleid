@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visie · ICT-beleid</title>
+<link rel="stylesheet" href="nav.css">
+<style>
+/* ── HERO ── */
+.page-hero{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;background:var(--white)}
+.page-hero-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px;justify-content:center}
+.page-hero-label::before,.page-hero-label::after{content:'';display:block;width:20px;height:1px;background:var(--red);opacity:.4}
+.page-hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.06;color:var(--black);max-width:700px;margin-bottom:18px}
+.page-hero p{font-size:18px;color:var(--midgray);max-width:540px;line-height:1.6;font-weight:300}
+
+/* ── INLEIDING ── */
+.intro-wrap{background:var(--offwhite);padding:64px 24px}
+.intro-inner{max-width:780px;margin:0 auto}
+.intro-quote{font-size:clamp(20px,3vw,28px);font-weight:300;line-height:1.55;color:var(--black);letter-spacing:-.4px;border-left:3px solid var(--red);padding-left:28px}
+
+/* ── PEILERS OVERVIEW ── */
+.pillars-overview{padding:80px 24px 40px;max-width:980px;margin:0 auto}
+.pillars-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px}
+@media(max-width:860px){.pillars-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:540px){.pillars-grid{grid-template-columns:1fr 1fr}}
+.pillar-chip{background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:16px;padding:20px 16px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:background .18s,border-color .18s}
+.pillar-chip:hover{background:#fff;border-color:var(--lightgray)}
+.pillar-chip-num{font-size:11px;font-weight:700;color:var(--red);letter-spacing:.06em}
+.pillar-chip-label{font-size:13px;font-weight:500;color:var(--black);line-height:1.4}
+
+/* ── PILLAR SECTIONS ── */
+.pillar-section{padding:72px 24px;max-width:980px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start}
+@media(max-width:720px){.pillar-section{grid-template-columns:1fr;gap:24px}}
+.pillar-aside{position:sticky;top:72px}
+.pillar-aside-num{font-size:48px;font-weight:800;color:var(--red);opacity:.12;line-height:1;letter-spacing:-3px;margin-bottom:4px}
+.pillar-aside-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.pillar-aside-title{font-size:20px;font-weight:700;color:var(--black);letter-spacing:-.5px;line-height:1.25;margin-top:8px}
+.pillar-body p{font-size:16px;color:var(--midgray);line-height:1.75;margin-bottom:16px;font-weight:300}
+.pillar-body p:last-child{margin-bottom:0}
+
+/* ── 4 IN BALANS ── */
+.balans-wrap{background:var(--black);padding:72px 24px}
+.balans-inner{max-width:780px;margin:0 auto;text-align:center}
+.balans-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:block}
+.balans-title{font-size:clamp(24px,4vw,40px);font-weight:700;letter-spacing:-1.2px;color:white;line-height:1.1;margin-bottom:16px}
+.balans-lead{font-size:16px;color:rgba(255,255,255,.55);line-height:1.65;font-weight:300;max-width:560px;margin:0 auto 36px}
+.balans-btn{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--black);font-size:14px;font-weight:500;padding:12px 22px;border-radius:980px;text-decoration:none;transition:background .18s,color .18s}
+.balans-btn:hover{background:var(--offwhite)}
+.balans-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ── ONTDEK MEER ── */
+.meer-wrap{padding:72px 24px}
+.meer-inner{max-width:980px;margin:0 auto}
+.meer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media(max-width:720px){.meer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.meer-grid{grid-template-columns:1fr}}
+.meer-card{display:flex;flex-direction:column;gap:12px;background:var(--offwhite);border:.5px solid var(--ultralightgray);border-radius:20px;padding:24px;text-decoration:none;transition:background .18s,border-color .18s}
+.meer-card:hover{background:#fff;border-color:var(--lightgray)}
+.meer-card-icon{width:40px;height:40px;border-radius:12px;background:rgba(169,38,78,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.meer-card-icon svg{width:20px;height:20px;stroke:var(--red);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.meer-card-title{font-size:14px;font-weight:600;color:var(--black);letter-spacing:-.2px;line-height:1.35}
+.meer-card-sub{font-size:12px;color:var(--midgray);line-height:1.5}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-label">Onze visie</div>
+  <h1>Wij zijn voor.</h1>
+  <p>Hoe we kijken naar leren, technologie en de ontwikkeling van elke leerling.</p>
+</section>
+
+<hr class="divider">
+
+<!-- INLEIDING -->
+<div class="intro-wrap">
+  <div class="intro-inner reveal">
+    <p class="intro-quote">We geloven in de kracht van onderwijs en opvoeding. Met passie zetten wij ons in om jongeren te helpen bij de ontwikkeling van hun mogelijkheden en van hun persoonlijke vorming. Dit doen we met een krachtige leer- en leefomgeving.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PEILERS OVERVIEW -->
+<div class="pillars-overview">
+  <div class="reveal">
+    <span class="section-label">Vijf pijlers</span>
+    <h2 class="section-title">Pijlers van onze visie.</h2>
+    <p class="section-lead">Ons onderwijs steunt op vijf principes die samen een krachtige leeromgeving vormen.</p>
+  </div>
+  <div class="pillars-grid reveal reveal-delay-1">
+    <a href="#pijler-1" class="pillar-chip">
+      <span class="pillar-chip-num">01</span>
+      <span class="pillar-chip-label">Eigentijds leren</span>
+    </a>
+    <a href="#pijler-2" class="pillar-chip">
+      <span class="pillar-chip-num">02</span>
+      <span class="pillar-chip-label">Persoonsgericht leren</span>
+    </a>
+    <a href="#pijler-3" class="pillar-chip">
+      <span class="pillar-chip-num">03</span>
+      <span class="pillar-chip-label">Leren uit fouten</span>
+    </a>
+    <a href="#pijler-4" class="pillar-chip">
+      <span class="pillar-chip-num">04</span>
+      <span class="pillar-chip-label">Leren binnen en buiten de school</span>
+    </a>
+    <a href="#pijler-5" class="pillar-chip">
+      <span class="pillar-chip-num">05</span>
+      <span class="pillar-chip-label">Leren van en aan elkaar</span>
+    </a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PEILER 1 -->
+<div id="pijler-1">
+  <div class="pillar-section">
+    <div class="pillar-aside reveal">
+      <div class="pillar-aside-num">01</div>
+      <span class="pillar-aside-label">Pijler 1</span>
+      <div class="pillar-aside-title">Eigentijds leren</div>
+    </div>
+    <div class="pillar-body reveal reveal-delay-1">
+      <p>Als leerlingen beseffen dat het leren in de klas te maken heeft met wat er zich in de samenleving afspeelt, wordt het boeiend. Wie bijvoorbeeld vertrekt van de werkgelegenheid in de eigen regio, kan al snel uitkomen bij de nationale economie en de internationale handelsakkoorden. Zo kan een filmpje van een staatsbezoek leerlingen laten zien hoe een handelsmissie bedrijven de kans geeft om internationaal contracten af te sluiten die gevolgen hebben voor nationale en regionale tewerkstelling.</p>
+      <p>Eigentijds leren betekent ook dat leerlingen kennismaken met de technologieën die hun toekomstige beroepsomgeving zullen bepalen. Via augmented reality kunnen leerlingen verpleegkunde of verzorging oefeningen uitvoeren in een gesimuleerde zorgomgeving, van correct tillen en verplaatsen van patiënten tot het inoefenen van verzorgingstechnieken, zonder dat daarvoor een echte setting nodig is. Leerlingen economie verkennen op hun beurt nieuwe vormen van marketing: ze analyseren, onder andere met on-device AI, hoe merken sociale media, data en digitale campagnes inzetten om doelgroepen te bereiken, en ontwerpen zelf een eigentijdse marketingstrategie die aansluit bij de realiteit van vandaag.</p>
+      <p>Met de iPad halen de leerlingen de wereld in de klas binnen. Zulke actuele fragmenten geven via kritisch denken toeleiding tot leerplandoelen en de zinvolheid ervan. Het is een kleine stap om leerlingen op het einde van zo'n lessenreeks zelf een filmpje te laten maken om de jaarlijkse havendag in Zeebrugge of Antwerpen te laten promoten.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PIJLER 2 -->
+<div id="pijler-2" style="background:var(--offwhite)">
+  <div class="pillar-section">
+    <div class="pillar-aside reveal">
+      <div class="pillar-aside-num">02</div>
+      <span class="pillar-aside-label">Pijler 2</span>
+      <div class="pillar-aside-title">Persoonsgericht leren</div>
+    </div>
+    <div class="pillar-body reveal reveal-delay-1">
+      <p>Ook al zitten leerlingen in dezelfde klasgroep, toch kan er veel verschil zijn in de manier waarop ze leren. Sommige kinderen hebben specifieke noden. Wie bijvoorbeeld dyslexie heeft, is geholpen met auditieve ondersteuning. Door onze iPads hebben wij geen externe, dure software nodig. Onze leerlingen kunnen met de functies van de iPad zelf hun auditieve ondersteuning regelen. Ook zonder leerstoornis zijn leerlingen gebaat met de tablet als leermiddel. Als een leerkracht taal een luisteropdracht geeft, kan de leerling op eigen tempo bepaalde fragmenten beluisteren of terugspoelen zodat hij nog verfijnder kan luisteren om antwoorden te kunnen geven. Het digitaal leren faciliteert op die manier differentiatie door de technologie zonder de planlast van de leerkracht te verhogen. Ook andere zorgnoden kunnen met behulp van de ingebouwde toegankelijkheidsmogelijkheden ondersteund worden. Dit alles past volledig bij de verschillende fases uit ons zorgbeleid. Daarnaast helpen de mogelijkheden van Focus en Schermtijd om leerlingen persoonlijk te begeleiden in hun groei als digitale burgers.</p>
+      <p>Naast een eigen tempo hebben leerlingen ook een eigen leerstijl. Zo zijn er leerlingen die een wiskundige wetmatigheid zullen leren door analyse en toepassing van een formule of een voorschrift, terwijl er anderen zijn die verbanden pas zullen begrijpen door parameters in digitale grafieken te wijzigen en te observeren wat er gebeurt bij de wijziging. Met een tablet heb je een leermiddel dat zowel denkers als doeners kan bedienen.</p>
+      <p>Verder willen we verschillende leerstijlen actief ondersteunen, want elke leerling is anders. Waar het kan bieden we leerlingen de kans om bij het leren een persoonlijke touch toe te voegen: dan wordt leren echt krachtig. Zo bieden we bij de lessen een mix aan van verschillende werkvormen, zoals schrijven op de iPad met Apple Pencil, het gebruik van multimediale leerobjecten en klassieke invoer. Evenzeer moet er ruimte zijn om ook unplugged te leren, zonder scherm, wanneer dat de beste keuze is.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PIJLER 3 -->
+<div id="pijler-3">
+  <div class="pillar-section">
+    <div class="pillar-aside reveal">
+      <div class="pillar-aside-num">03</div>
+      <span class="pillar-aside-label">Pijler 3</span>
+      <div class="pillar-aside-title">Leren uit fouten</div>
+    </div>
+    <div class="pillar-body reveal reveal-delay-1">
+      <p>Het is evidence based dat gerichte feedback een krachtig middel is om te leren. In onze school gaan we ervan uit dat fouten maken mag. Fouten zijn nu eenmaal een belangrijke stap in het leerproces. Leerkrachten bieden opdrachten in verschillende moeilijkheidsgraden aan. Tijdens momenten van begeleid zelfstandig werken kunnen leerlingen onder begeleiding van een coach hun eigen leerpad volgen en bijsturen waar nodig.</p>
+      <p>We besteden daarbij aandacht aan de volledige feedbackcyclus: we willen leerlingen tonen waar we naartoe werken, hen regelmatig informeren waar ze al staan en ook vertellen wat hun volgende stap in het leren kan zijn. De digitale mogelijkheden helpen om dit proces te optimaliseren en efficiënt te laten verlopen, zodat feedback geen eenmalig moment is maar een doorlopend gesprek over groei.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PIJLER 4 -->
+<div id="pijler-4" style="background:var(--offwhite)">
+  <div class="pillar-section">
+    <div class="pillar-aside reveal">
+      <div class="pillar-aside-num">04</div>
+      <span class="pillar-aside-label">Pijler 4</span>
+      <div class="pillar-aside-title">Leren binnen en buiten de school</div>
+    </div>
+    <div class="pillar-body reveal reveal-delay-1">
+      <p>We vinden het belangrijk dat leerlingen binnen en buiten de school leren. Daarom organiseren we voor heel wat vakken excursies. Als onze leerlingen voor biologie bijvoorbeeld op veldonderzoek gaan, is hun iPad een ideaal middel om foto's van bodem of planten op te slaan. Terug in de klas kan met dit persoonlijk materiaal analyse en onderzoek gebeuren. Theorie en praktijk worden zo vervlochten om beter tot inzicht te komen.</p>
+      <p>Het gebeurt dat de leerkracht een filmpje van een stuk leerstof maakt om thuis te bekijken, voor de theorie in de klas behandeld is. Met deze <em>flipped classroom</em>-aanpak stimuleert de leerkracht het zelfverantwoordelijk leren van de leerling: wat begrijpt hij wel en wat niet? In de klas is er dan tijd om de vragen die leerlingen hebben bij de leerstof te verkennen en te beantwoorden. Het spreekt voor zich dat deze manier van werken de betrokkenheid van de leerlingen bij het lesgebeuren verhoogt.</p>
+      <p>Soms gebeurt het dat leerlingen in een klasforum samen discussiëren over mogelijke oplossingen van een probleem. Door meer én actiever met leerstof bezig te zijn thuis én op school verloopt de verwerking van de leerstof intenser en beklijft ze langer.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PIJLER 5 -->
+<div id="pijler-5">
+  <div class="pillar-section">
+    <div class="pillar-aside reveal">
+      <div class="pillar-aside-num">05</div>
+      <span class="pillar-aside-label">Pijler 5</span>
+      <div class="pillar-aside-title">Leren van en aan elkaar</div>
+    </div>
+    <div class="pillar-body reveal reveal-delay-1">
+      <p>In onze school verloopt het leren in twee richtingen. Het is normaal dat leerkrachten leren aan leerlingen, maar ook leerlingen zijn geen lege vaten om te vullen. Zeker als het op nieuwe technologieën aankomt, kennen sommige jongeren toepassingen eerder dan volwassenen. Leerkrachten die ontvankelijk zijn om weetjes en werkwijzen van leerlingen te implementeren in hun leerstof, verhogen automatisch de intrinsieke motivatie van hun leerlingen om te leren. Wij vinden het ook normaal dat leerlingen aan leerlingen leren. Wie in onze school nieuw in een hoger jaar binnenkomt, mag op zijn medeleerlingen rekenen om functies van de iPad in de vingers te krijgen en om digitale toepassingen te leren maken en op de juiste manier te inventariseren.</p>
+      <p>Ook binnen ons lerarenteam stimuleren we het leren van en aan elkaar. Bij personeelsvergaderingen lassen we gerichte scrums in: korte, gestructureerde momenten waarop collega's in een paar minuten een succesvolle app of nieuwe digitale toepassing aan elkaar tonen. Die aanpak verlaagt de drempel om bij te blijven op it-vlak en verhoogt de professionalisering van het voltallige korps. Ook is er extra aandacht voor nieuwe leraren, zodat ook zij snel kunnen aansluiten en optimaal digitale skills kunnen inzetten.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- 4 IN BALANS -->
+<div class="balans-wrap">
+  <div class="balans-inner reveal">
+    <span class="balans-label">Kader</span>
+    <h2 class="balans-title">Het vier-in-balans-model.</h2>
+    <p class="balans-lead">Onze visie sluit aan bij het herwerkte vier-in-balans-model van Digisprong. Visie, deskundigheid, digitale leermiddelen en infrastructuur versterken elkaar voor succesvol digitaal leren.</p>
+    <a href="https://www.vlaanderen.be/kenniscentrum-digisprong/het-herwerkte-vier-in-balans-model" target="_blank" rel="noopener" class="balans-btn">
+      Bekijk het model
+      <svg viewBox="0 0 14 14"><path d="M1 7h12M8 3l5 4-5 4"/></svg>
+    </a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ONTDEK MEER -->
+<div class="meer-wrap">
+  <div class="meer-inner">
+    <div class="reveal">
+      <span class="section-label">Ontdek meer</span>
+      <h2 class="section-title">Meer over onze school.</h2>
+      <p class="section-lead">Verdiep je in onze aanpak via het iBook, de brochure en de film van onze school.</p>
+    </div>
+    <div class="meer-grid reveal reveal-delay-1">
+      <a href="#" class="meer-card">
+        <div class="meer-card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+        </div>
+        <div class="meer-card-title">iBook: Eerste iPadschool in Blankenberge</div>
+        <div class="meer-card-sub">Wij zijn voor: het volledige verhaal van onze school in een interactief boek.</div>
+      </a>
+      <a href="#" class="meer-card">
+        <div class="meer-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="meer-card-title">Brochure Radicaal digitaal</div>
+        <div class="meer-card-sub">Onze visie op digitaal leren, samengevat in een overzichtelijke brochure.</div>
+      </a>
+      <a href="#" class="meer-card">
+        <div class="meer-card-icon">
+          <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="meer-card-title">Film van onze school</div>
+        <div class="meer-card-sub">Bekijk hoe leren bij ons in de praktijk eruitziet, in en buiten de klas.</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="logo2.png" width="20" height="20" alt="SJSP" style="display:block;border-radius:4px;flex-shrink:0">
+    <span>ICT-beleid</span>
+  </div>
+  <div class="footer-copy">© 2026 Sint-Jozef Sint-Pieter | Wij zijn voor.</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Smooth scroll for pillar chips
+document.querySelectorAll('a[href^="#pijler-"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
